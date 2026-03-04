@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="bg-light text-center py-5">
+  <div class="container">
+    <h1 class="display-4 fw-bold mb-3">Welcome to GnG</h1>
+    <p class="lead text-muted mb-4">
+      Exceptional window services, book with the best.
+    </p>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="/about" class="btn btn-primary btn-lg">About Us</a>
+      <a href="#gallery" class="btn btn-outline-secondary btn-lg">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="container my-5">
+  <div class="row justify-content-center g-4">
+
+    <div class="col-lg-4 col-md-6">
+      <div class="image-card">
+        <img src="{% static 'images/home1.jpg' %}" alt="Service 1">
+        <h5>Premium Service</h5>
+        <p>Quality cleaning with attention to detail.</p>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+      <div class="image-card">
+        <img src="{% static 'images/home2.jpg' %}" alt="Service 2">
+        <h5>Reliable Team</h5>
+        <p>Professional, trusted, and efficient.</p>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+      <div class="image-card">
+        <img src="{% static 'images/home3.jpg' %}" alt="Service 3">
+        <h5>Customer Focused</h5>
+        <p>We prioritize your satisfaction.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- CALL TO ACTION -->
+<section class="bg-primary text-white text-center py-5">
+  <div class="container">
+    <h2 class="mb-3">Ready to Get Started?</h2>
+    <a href="{% url 'booking' %}" class="btn btn-light btn-lg">Book With Us</a>
+  </div>
+</section>
+
+{% endblock %}
