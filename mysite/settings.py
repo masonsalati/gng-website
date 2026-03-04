@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wt2+)n_wk73u(tu!d$hwwa71c)zv#wn7xov5@l8qqau=fz3&#n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.onrender.com']
 
 
 # Application definition
@@ -48,6 +48,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -135,3 +137,4 @@ EMAIL_HOST_USER = 'glassngutter@gmail.com'
 EMAIL_HOST_PASSWORD = 'dbwy wbml pove unhx'    
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
