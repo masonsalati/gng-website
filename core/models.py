@@ -15,6 +15,7 @@ class Booking(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
+    preferred_date = models.DateField()
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
