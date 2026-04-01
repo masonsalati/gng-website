@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review
+from .models import Review, Booking
 
 class ReviewForm(forms.ModelForm):
     class Meta:
@@ -8,10 +8,26 @@ class ReviewForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
-           'phone': forms.TextInput(attrs={
-            'class': 'form-control',
-            'type': 'tel',
-            'placeholder': 'e.g. 613-555-1234'
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'tel',
+                'placeholder': 'e.g. 613-555-1234'
+            }),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
+
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['name', 'email', 'phone', 'message']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'tel',
+                'placeholder': 'e.g. 613-555-1234'
             }),
             'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
