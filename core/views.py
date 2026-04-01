@@ -1,21 +1,18 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.conf import settings
+
+from .models import Review
+from .forms import ReviewForm
+
 
 def home(request):
     return render(request, 'home.html')
 
+
 def about(request):
     return render(request, 'about.html')
 
-def booking(request):
-    return render(request, 'booking.html')
-
-def review(request):
-    return render(request, 'review.html')
-
-
-from django.core.mail import send_mail
-from django.conf import settings
-from django.shortcuts import render, redirect
 
 def booking(request):
     if request.method == "POST":
@@ -24,25 +21,20 @@ def booking(request):
         phone = request.POST.get("phone")
         message = request.POST.get("message")
 
-        send_mail(
-            subject="New Booking Request",
-            message=f"""
-Name: {name}
-Email: {email}
-Phone: {phone}
-Message: {message}
-""",
-            from_email=None,  # IMPORTANT: uses DEFAULT_FROM_EMAIL from settings.py
-            recipient_list=["glassngutter@gmail.com"],
-            fail_silently=False,
-        )
-
-        return render(request, "booking.html", {"success": True})
+        try:
+            send_mail(
+                subject="New Booking Request",
+                message=f"Name: {name}\nEmail: {email}\nPhone: {phone}\nMessage: {message}",
+                from_email=None,  # uses DEFAULT_FROM_EMAIL from settings.py
+                recipient_list=["glassngutter@gmail.com"],
+                fail_silently=False,
+            )
+            return render(request, "booking.html", {"success": True})
+        except Exception as e:
+            return render(request, "booking.html", {"error": "Failed to send email. Please try again later."})
 
     return render(request, "booking.html")
 
-from .models import Review
-from .forms import ReviewForm
 
 def review(request):
     reviews = Review.objects.all().order_by('-created_at')
@@ -52,14 +44,16 @@ def review(request):
         if form.is_valid():
             review = form.save()
 
-            # Send thank-you email
-            send_mail(
-                "Thank You for Your Review!",
-                "Hi {},\n\nThank you for your review of GnG! We appreciate your support.".format(review.name),
-                settings.EMAIL_HOST_USER,
-                [review.email],
-                fail_silently=False,
-            )
+            try:
+                send_mail(
+                    subject="Thank You for Your Review!",
+                    message=f"Hi {review.name},\n\nThank you for your review of GnG! We appreciate your support.",
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[review.email],
+                    fail_silently=False,
+                )
+            except Exception:
+                pass  # Don't block the redirect if the thank-you email fails
 
             return redirect('review')
     else:
@@ -67,5 +61,5 @@ def review(request):
 
     return render(request, "review.html", {
         'form': form,
-        'reviews': reviews
+        'reviews': reviews,
     })
