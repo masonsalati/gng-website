@@ -20,7 +20,7 @@ class ReviewForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['name', 'email', 'phone', 'message']
+        fields = ['name', 'email', 'phone', 'preferred_date', 'message']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
@@ -28,6 +28,11 @@ class BookingForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'tel',
                 'placeholder': 'e.g. 613-555-1234'
+            }),
+            'preferred_date': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date',
+                'style': 'color-scheme: light; color: #000;'
             }),
             'message': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
